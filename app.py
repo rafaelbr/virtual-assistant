@@ -13,7 +13,6 @@ userinput = ''
 
 while True:
     result = assistant.message(userinput, context)
-    #print(json.dumps(result, indent=2))
     context = result['context']
     if 'actions' in result:
         action = result['actions'][0]
