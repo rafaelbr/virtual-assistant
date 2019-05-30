@@ -106,3 +106,5 @@ venv.bak/
 # additional
 .idea/
 config.py
+credentials.json
+token.pickle
