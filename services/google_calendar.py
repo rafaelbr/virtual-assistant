@@ -1,4 +1,5 @@
 import datetime
+import dateutil.parser
 import pickle
 import os.path
 from googleapiclient.discovery import build
@@ -50,3 +51,24 @@ class GoogleCalendarService:
         #print(data)
         event = self.service.events().insert(calendarId='primary', body=data).execute()
         return event
+
+    def getEvents(self, date):
+        dt_start = date + 'T00:00:00-03:00'
+        dt_end = date + 'T23:59:00-03:00'
+        events_result = self.service.events().list(calendarId='primary', timeMin=dt_start, timeMax=dt_end,
+                                              maxResults=10, singleEvents=True,
+                                              orderBy='startTime').execute()
+        events = events_result.get('items', [])
+
+        data = {
+            'date': date,
+            'values': []
+        }
+
+        for event in events:
+            start = event['start'].get('dateTime', event['start'].get('date'))
+            date_start = dateutil.parser.parse(start)
+            summary = event['summary']
+            data['values'].append(date_start.strftime('%H:%M') + " - " + summary)
+        print(data)
+        return data

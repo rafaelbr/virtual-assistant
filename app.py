@@ -20,8 +20,10 @@ while True:
         context[action['result_variable']] = data
         result = assistant.message('', context)
         context = result['context']
-
-    print(result['output']['text'][0])
+    #print(result)
+    #convert /n into line break
+    text = result['output']['text'][0].replace('\\n','\n')
+    print(text)
 
     exit = False
     for intent in result['intents']:

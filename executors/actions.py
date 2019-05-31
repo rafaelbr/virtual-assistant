@@ -36,5 +36,8 @@ class ActionExecutor:
                 'link': event['htmlLink']
             }
             return data
-
+        if action == 'GetEvents':
+            date = params['date']
+            data = self.calendar.getEvents(date)
+            return data
 
