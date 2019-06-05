@@ -1,0 +1,812 @@
+{
+  "name": "AssistenteVirtual",
+  "intents": [
+    {
+      "intent": "saudacao",
+      "examples": [
+        {
+          "text": "Olá"
+        },
+        {
+          "text": "Bom dia"
+        },
+        {
+          "text": "Oi"
+        },
+        {
+          "text": "Tudo bem?"
+        },
+        {
+          "text": "Boa tarde"
+        },
+        {
+          "text": "Boa noite"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "listaevento",
+      "examples": [
+        {
+          "text": "Me diga os eventos de hoje"
+        },
+        {
+          "text": "Quero saber meu calendário de hoje"
+        },
+        {
+          "text": "Quais meus eventos de hoje?"
+        },
+        {
+          "text": "O que tem para fazer hoje?"
+        },
+        {
+          "text": "Me mostre os eventos de hoje"
+        },
+        {
+          "text": "Qual minha agenda de hoje?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "agendarevento",
+      "examples": [
+        {
+          "text": "Quero marcar um evento"
+        },
+        {
+          "text": "Quero marcar uma agenda"
+        },
+        {
+          "text": "Quero agendar um horário"
+        },
+        {
+          "text": "Quero agendar um evento"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "clima",
+      "examples": [
+        {
+          "text": "Qual o clima de hoje para Brasília"
+        },
+        {
+          "text": "Qual a previsão do tempo para a semana que vem?"
+        },
+        {
+          "text": "quero saber o clima de amanhã"
+        },
+        {
+          "text": "Qual o clima de Brasília?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "horario",
+      "examples": [
+        {
+          "text": "Que horas são?"
+        },
+        {
+          "text": "Me diga o horário atual"
+        },
+        {
+          "text": "Qual o horário atual?"
+        },
+        {
+          "text": "Quantas horas são?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "finalizacao",
+      "examples": [
+        {
+          "text": "Adeus"
+        },
+        {
+          "text": "Até mais"
+        },
+        {
+          "text": "Até logo"
+        },
+        {
+          "text": "Até breve"
+        },
+        {
+          "text": "Tchau"
+        }
+      ],
+      "description": ""
+    }
+  ],
+  "entities": [
+    {
+      "entity": "sys-time",
+      "values": []
+    },
+    {
+      "entity": "confirmacao",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Não",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Sim",
+          "synonyms": [
+            "Isso"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "cidade",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Fortaleza",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Recife",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "New York",
+          "synonyms": [
+            "Nova Iorque",
+            "NY"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "São Paulo",
+          "synonyms": [
+            "Sampa",
+            "SP"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Orlando",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Amsterdam",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Miami",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Brasília",
+          "synonyms": [
+            "BSB"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Rio de Janeiro",
+          "synonyms": [
+            "Rio",
+            "RJ"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-date",
+      "values": []
+    }
+  ],
+  "language": "pt-br",
+  "metadata": {
+    "api_version": {
+      "major_version": "v1",
+      "minor_version": "2018-09-20"
+    }
+  },
+  "description": "",
+  "dialog_nodes": [
+    {
+      "type": "slot",
+      "parent": "node_1_1557873675223",
+      "variable": "$date",
+      "dialog_node": "slot_5_1557873752202",
+      "previous_sibling": "slot_2_1557873726650"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "O clima para $cidade em $date será: $clima"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1557873675223",
+      "actions": [
+        {
+          "name": "GetWeather",
+          "type": "client",
+          "parameters": {
+            "date": "$date",
+            "location": "$cidade"
+          },
+          "result_variable": "context.clima"
+        }
+      ],
+      "disabled": true,
+      "metadata": {},
+      "conditions": "true",
+      "dialog_node": "node_8_1557873814774",
+      "previous_sibling": "node_10_1557874553215"
+    },
+    {
+      "type": "slot",
+      "parent": "node_1_1557873675223",
+      "variable": "$cidade",
+      "dialog_node": "slot_2_1557873726650",
+      "previous_sibling": "node_8_1557873814774"
+    },
+    {
+      "type": "standard",
+      "title": "Resposta do clima",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "O clima de $clima.location em $clima.date é: $clima.text"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1557873675223",
+      "context": {
+        "date": null,
+        "cidade": null
+      },
+      "metadata": {},
+      "conditions": "true",
+      "dialog_node": "node_10_1557874553215"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": "Quer saber os eventos de que dia?"
+      },
+      "parent": "slot_1_1559260756204",
+      "event_name": "focus",
+      "dialog_node": "handler_3_1559260756204",
+      "previous_sibling": "handler_2_1559260756204"
+    },
+    {
+      "type": "event_handler",
+      "parent": "slot_1_1559260756204",
+      "context": {
+        "date": "@sys-date"
+      },
+      "conditions": "@sys-date",
+      "event_name": "input",
+      "dialog_node": "handler_2_1559260756204"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": "Qual o horário do evento?"
+      },
+      "parent": "slot_5_1559174238137",
+      "event_name": "focus",
+      "dialog_node": "handler_7_1559174238137",
+      "previous_sibling": "handler_6_1559174238137"
+    },
+    {
+      "type": "event_handler",
+      "parent": "slot_5_1559174238137",
+      "context": {
+        "time": "@sys-time"
+      },
+      "conditions": "@sys-time",
+      "event_name": "input",
+      "dialog_node": "handler_6_1559174238137"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Você não possui eventos para esse dia"
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "node_4_1559260869729",
+      "metadata": {},
+      "conditions": "true",
+      "dialog_node": "node_6_1559263209959",
+      "previous_sibling": "node_5_1559263187683"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Seus eventos do dia <? $eventos.date.reformatDateTime('dd/MM/yyyy') ?> são: \\n<? $eventos.values.join('\\n') ?>"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1559260869729",
+      "metadata": {},
+      "conditions": "$eventos && $eventos.values.size() > 0",
+      "dialog_node": "node_5_1559263187683"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": "Quer saber o clima de onde?"
+      },
+      "parent": "slot_2_1557873726650",
+      "event_name": "focus",
+      "dialog_node": "handler_4_1557873726650",
+      "previous_sibling": "handler_3_1557873726650"
+    },
+    {
+      "type": "event_handler",
+      "parent": "slot_2_1557873726650",
+      "context": {
+        "cidade": "@cidade"
+      },
+      "conditions": "@cidade",
+      "event_name": "input",
+      "dialog_node": "handler_3_1557873726650"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_8_1559174345366",
+      "context": {
+        "confirmacao": "@confirmacao && slot_in_focus"
+      },
+      "metadata": {},
+      "conditions": "@confirmacao && slot_in_focus",
+      "event_name": "input",
+      "dialog_node": "handler_9_1559174345366",
+      "previous_sibling": "handler_10_1559174345366"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "Ok, vamos começar de novo",
+            ""
+          ]
+        }
+      },
+      "parent": "slot_8_1559174345366",
+      "conditions": "@confirmacao:Não",
+      "event_name": "filled",
+      "dialog_node": "handler_14_1559175009316",
+      "previous_sibling": "handler_9_1559174345366"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": "Confirmando: você quer agendar um evento para o dia <? $date.reformatDateTime('dd/MM/YYYY') ?> às <? $time.reformatDateTime('h:mm') ?>"
+      },
+      "parent": "slot_8_1559174345366",
+      "metadata": {},
+      "event_name": "focus",
+      "dialog_node": "handler_10_1559174345366"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": "Para quando quer saber o clima?"
+      },
+      "parent": "slot_5_1557873752202",
+      "event_name": "focus",
+      "dialog_node": "handler_7_1557873752202",
+      "previous_sibling": "handler_6_1557873752202"
+    },
+    {
+      "type": "event_handler",
+      "parent": "slot_5_1557873752202",
+      "context": {
+        "date": "@sys-date"
+      },
+      "conditions": "@sys-date",
+      "event_name": "input",
+      "dialog_node": "handler_6_1557873752202"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": "Qual a data do evento?"
+      },
+      "parent": "slot_2_1559174223581",
+      "event_name": "focus",
+      "dialog_node": "handler_4_1559174223581",
+      "previous_sibling": "handler_3_1559174223581"
+    },
+    {
+      "type": "event_handler",
+      "parent": "slot_2_1559174223581",
+      "context": {
+        "date": "@sys-date"
+      },
+      "conditions": "@sys-date",
+      "event_name": "input",
+      "dialog_node": "handler_3_1559174223581"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_1_1559174208140",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "variable": "$confirmacao",
+      "dialog_node": "slot_8_1559174345366",
+      "previous_sibling": "slot_5_1559174238137"
+    },
+    {
+      "type": "slot",
+      "parent": "node_1_1559174208140",
+      "variable": "$time",
+      "dialog_node": "slot_5_1559174238137",
+      "previous_sibling": "slot_2_1559174223581"
+    },
+    {
+      "type": "slot",
+      "parent": "node_1_1559174208140",
+      "variable": "$date",
+      "dialog_node": "slot_2_1559174223581",
+      "previous_sibling": "node_13_1559174611424"
+    },
+    {
+      "type": "standard",
+      "title": "Captura nome e envia ação",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Realizando o agendamento..."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1559174208140",
+      "actions": [
+        {
+          "name": "SetEvent",
+          "type": "client",
+          "parameters": {
+            "date": "$date",
+            "name": "$nome",
+            "time": "$time"
+          },
+          "result_variable": "evento"
+        }
+      ],
+      "context": {
+        "nome": "<? input.text ?>"
+      },
+      "metadata": {},
+      "conditions": "true",
+      "dialog_node": "node_13_1559174611424"
+    },
+    {
+      "type": "standard",
+      "title": "Resposta do agendamento",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Horário agendado, segue o link do calendário: $evento.link"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_13_1559174611424",
+      "context": {
+        "date": null,
+        "nome": null,
+        "time": null,
+        "confirmacao": null
+      },
+      "metadata": {},
+      "conditions": "true",
+      "dialog_node": "node_17_1559177484998"
+    },
+    {
+      "type": "slot",
+      "parent": "node_1_1559259602335",
+      "variable": "$date",
+      "dialog_node": "slot_1_1559260756204",
+      "previous_sibling": "node_4_1559260869729"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_1_1559259602335",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "true",
+      "dialog_node": "node_4_1559260869729",
+      "digress_out": "allow_all"
+    },
+    {
+      "type": "frame",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Qual o nome do evento?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "metadata": {
+        "fallback": "leave"
+      },
+      "conditions": "#agendarevento",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_1_1559174208140",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_1_1558547558681",
+      "digress_out_slots": "not_allowed"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "A data de hoje é <? today().reformatDateTime('dd/MM/yyyy') ?>, são <? now().reformatDateTime('HH:mm') ?>"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "metadata": {},
+      "conditions": "#horario",
+      "dialog_node": "node_1_1558547558681",
+      "previous_sibling": "node_1_1557873675223"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Adeus"
+              },
+              {
+                "text": "Até logo"
+              },
+              {
+                "text": "Até breve"
+              },
+              {
+                "text": "Até mais"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "metadata": {},
+      "conditions": "#finalizacao",
+      "dialog_node": "node_2_1557856892069",
+      "previous_sibling": "node_1_1557856851841"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Olá!"
+              },
+              {
+                "text": "Oi"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "metadata": {},
+      "conditions": "#saudacao",
+      "dialog_node": "node_1_1557856851841",
+      "previous_sibling": "Bem-vindo"
+    },
+    {
+      "type": "frame",
+      "output": {
+        "generic": [
+          {
+            "values": [],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "name": "GetEvents",
+          "type": "client",
+          "parameters": {
+            "date": "$date"
+          },
+          "result_variable": "eventos"
+        }
+      ],
+      "metadata": {
+        "fallback": "leave"
+      },
+      "conditions": "#listaevento",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_1_1559259602335",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_1_1559174208140",
+      "digress_out_slots": "not_allowed"
+    },
+    {
+      "type": "frame",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Verificando..."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "name": "GetWeather",
+          "type": "client",
+          "parameters": {
+            "date": "$date",
+            "location": "$cidade"
+          },
+          "result_variable": "clima"
+        }
+      ],
+      "metadata": {
+        "fallback": "leave",
+        "_customization": {
+          "mcr": false
+        }
+      },
+      "conditions": "#clima",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_1_1557873675223",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_2_1557856892069",
+      "digress_out_slots": "not_allowed"
+    },
+    {
+      "type": "standard",
+      "title": "Em outros casos",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Eu não entendi. Você pode tentar reformular a frase."
+              },
+              {
+                "text": "Você pode reformular sua afirmação? Eu não estou entendendo."
+              },
+              {
+                "text": "Eu não entendi o sentido."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "metadata": {},
+      "conditions": "anything_else",
+      "dialog_node": "Em outros casos",
+      "previous_sibling": "node_1_1559259602335"
+    },
+    {
+      "type": "standard",
+      "title": "Bem-vindo",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Olá. Como posso te ajudar?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "metadata": {},
+      "conditions": "welcome",
+      "dialog_node": "Bem-vindo"
+    }
+  ],
+  "workspace_id": "3a58c029-5764-4822-b776-2daed7ba0b9c",
+  "counterexamples": [],
+  "system_settings": {
+    "tooling": {
+      "store_generic_responses": true
+    }
+  },
+  "learning_opt_out": false,
+  "status": "Available"
+}
